@@ -1,0 +1,124 @@
+package br.com.Interfaces;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JTextPane;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+
+import br.com.dados.DadosDoCliente;
+import br.com.BD.*;
+
+public class InterfaceListarCliente extends JFrame {
+	
+	/*
+	public void Janela() {
+		setSize(500, 500);
+		setTitle("Listar Clientes");
+		setLayout(null);
+		getContentPane().setBackground(Color.BLACK);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+ 	}
+ */
+	public static String sIO, sTitle;
+	public static String[] sSN = { "Sim", "Não" };
+	public static int iSN;
+	public static String[] sOpcao = { "Buscar todos os clientes", "Buscar cliente pelo nome", "Sair" };
+	public static int iOpcao;
+	public static Connection conn = null;
+	public static Statement st = null;
+	public static ResultSet rs = null;
+ 
+	public static void main(String[] args) {
+		
+ 		sTitle = "Sancell";
+		sIO = "Listar";
+	 
+		do {
+			sIO = "Selecione o botão da opção desejada";
+			iOpcao = JOptionPane.showOptionDialog(null, sIO, sTitle, 1, JOptionPane.QUESTION_MESSAGE, null, sOpcao,
+					null);
+			switch (iOpcao) {
+
+			case 0:
+				buscarTodosOsClientes();
+
+				break;
+			case 1:
+				BuscarClientesPeloNome();
+				
+				break;
+			case 2:
+
+				sIO = "Deseja realmente sair?";
+				iSN = JOptionPane.showOptionDialog(null, sIO, sTitle, 1, JOptionPane.QUESTION_MESSAGE, null, sSN, null);
+				if (iSN == 1)
+					iOpcao = -1;
+				break;
+			}
+		} while (iOpcao != 2);
+		System.exit(0);
+	}
+
+	public static void buscarTodosOsClientes() {
+		try {
+			conn = ConexaoBD.getConnection();
+
+			st = conn.createStatement();
+
+			rs = st.executeQuery("select * from cliente");
+
+			while (rs.next()) {
+				String op = rs.getString("id");
+				JOptionPane.showMessageDialog(null, "ID: " + rs.getString("id") + "....\n" + "Data: " + rs.getString("data") + " , " + "Nome: " +  rs.getString("nome") +  " , " + "CPF: " + rs.getString("cpf")
+				+  " , " + "Modelo: " + rs.getString("modelo") +  " , " + "Valor: " +  rs.getString("valor") +  " , " + "Observação: " + rs.getString("observacao") + "\n" + op);
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			ConexaoBD.closeResultSet(rs);
+			ConexaoBD.closeStatement(st);
+			ConexaoBD.closeConnection();
+		} 
+	}
+
+	public static void BuscarClientesPeloNome() {
+		JOptionPane.showMessageDialog(null, "BBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+
+	}
+	
+	/*
+	public void listar(Connection conn) {
+		String sql = "SELECT data, id, nome, cpf, modelo, valor, observacao FROM cliente";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				this.setData(rs.getString(1));
+				//this.setId(rs.getString(2));
+				this.setNome(rs.getString(2));
+				this.setCpf(rs.getString(3));
+				this.setModelo(rs.getString(4));
+				this.setValor(rs.getString(5));
+				this.setObservacao(rs.getString(6));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 */
+
+}

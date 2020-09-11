@@ -1,0 +1,155 @@
+package br.com.dados;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import br.com.BD.ConexaoBD;
+import br.com.Interfaces.InterfaceListarCliente;
+
+public class DadosDoCliente {
+
+	private String data;
+	//private String id;
+	private String nome;
+	private String cpf;
+	private String modelo;
+	private String valor;
+	private String observacao;
+
+	PreparedStatement stm;
+
+	public DadosDoCliente() {
+	}
+
+
+	public DadosDoCliente(String data , String nome, String cpf, String modelo, String valor, String observacao) {
+		super();
+		this.data = data;
+		//this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.modelo = modelo;
+		this.valor = valor;
+		this.observacao = observacao;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+	/*
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	 */
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public void inserir(Connection conn) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String sqlInsert = "insert into cliente(data, nome, cpf, modelo, valor, observacao)"
+				+"values(? ,? ,? ,? ,? ,?)";
+		try  {
+			stm = conn.prepareStatement(sqlInsert);
+			stm.setDate(1, new java.sql.Date(sdf.parse(getData()).getTime()));
+			//stm.setString(2, getId());
+			stm.setString(2, nome);
+			stm.setString(3, cpf);
+			stm.setString(4, modelo);
+			stm.setString(5, valor);
+			stm.setString(6, observacao);
+			stm.execute();
+			System.out.println("Conexão feita com sucesso....");
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			try {
+				conn.rollback();
+				
+				System.out.println("VOLTIS.......");
+			} catch (Exception e1) {
+				System.out.println(e.getStackTrace());
+			}
+		} catch(ParseException e) {
+			e.printStackTrace();
+		} finally {
+			ConexaoBD.closeStatement(stm);
+			ConexaoBD.closeConnection();
+			System.out.println("Conexão fechada com sucesso.........");
+
+		}
+	}
+	 
+	public void listar(Connection conn) {
+		
+		InterfaceListarCliente l = new InterfaceListarCliente();
+		 
+
+		String sql = "SELECT data, id, nome, cpf, modelo, valor, observacao FROM cliente";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				this.setData(rs.getString(1));
+				//this.setId(rs.getString(2));
+				this.setNome(rs.getString(2));
+				this.setCpf(rs.getString(3));
+				this.setModelo(rs.getString(4));
+				this.setValor(rs.getString(5));
+				this.setObservacao(rs.getString(6));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 
+}

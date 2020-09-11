@@ -1,0 +1,107 @@
+package br.com.Interfaces;
+
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
+
+public class InterfaceMenuPrincipal extends JFrame {
+
+	//ImageIcon fundo = new ImageIcon("res\\fundo-MenuPrincipal.jpg");
+	//JLabel label = new JLabel(fundo);
+	//JPanel panel = new JPanel();
+
+	public void Janela() {
+		setSize(1200, 750);
+		setTitle("Menu principal");
+		setLocationRelativeTo(null);
+		getContentPane().setBackground(Color.BLACK);
+		//add(label);
+		setVisible(true);
+	}
+
+	public void Tela() {
+		JMenuBar barraDoMenu = new JMenuBar();
+		JMenu cliente = new JMenu("Cliente");
+		JMenuItem inserir = new JMenuItem("Inserir novo cliente");
+		inserir.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			InterfaceInserirCliente c = new InterfaceInserirCliente();
+				 //JOptionPane.showMessageDialog(null, "Esta funcionando", "O botao inserir cliente", 
+						// JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+
+		JMenuItem atualizar = new JMenuItem("Atualizar dados do cliente");
+		atualizar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, " esta funcionando", "O botão atualizar", 
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+
+		JMenuItem deletar = new JMenuItem("Deletar dados do cliente");
+		deletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "esta funcionando", "O botão deletar", 
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
+		JMenuItem listar = new JMenuItem("Listar dados do cliente");
+		listar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 JOptionPane.showMessageDialog(null, "esta funcionando"," O botão listar"
+						 ,JOptionPane.INFORMATION_MESSAGE);	
+			}
+	});
+
+		cliente.add(inserir);
+		cliente.add(atualizar);
+		cliente.add(deletar);
+		cliente.add(listar);
+		cliente.add(new JSeparator());
+		barraDoMenu.add(cliente);
+		setJMenuBar(barraDoMenu);
+		
+		JMenu operacao = new JMenu("Operação");
+		JMenuItem agenda = new JMenuItem("Agenda");
+		agenda.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Esta funcionando", "O botão agenda",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+
+		operacao.add(agenda);
+		operacao.add(new JSeparator());
+		barraDoMenu.add(operacao);
+		setJMenuBar(barraDoMenu);
+	}
+
+	public InterfaceMenuPrincipal() {
+		Tela();
+		Janela();
+	}
+	 
+	//public static void main(String[] args) {new InterfaceMenuPrincipal(); } 
+}

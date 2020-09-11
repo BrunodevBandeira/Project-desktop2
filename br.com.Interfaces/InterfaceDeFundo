@@ -1,0 +1,31 @@
+package br.com.Interfaces;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+
+public class InterfaceDeFundo extends JFrame {
+	
+	ImageIcon fundo = new ImageIcon();
+	JLabel label = new JLabel(fundo);
+
+	public void Janela() {
+		setSize(570, 800);
+		setLocationRelativeTo(null);
+ 		getContentPane().setBackground(Color.BLACK);
+		//setResizable(false);
+		add(label);
+		setVisible(true);
+		InterfaceLogim t = new InterfaceLogim();
+	}
+
+	public InterfaceDeFundo() {
+		Janela();
+	}
+
+	public static void main(String[] args) {
+		new InterfaceDeFundo();
+	}
+}

@@ -1,0 +1,161 @@
+package br.com.Interfaces;
+
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextPane;
+import javax.swing.JOptionPane;
+
+import java.sql.ResultSet;
+import java.sql.Connection;
+
+import br.com.BD.BancoDeDadosException;
+import br.com.BD.ConexaoBD;
+import br.com.dados.DadosDoCliente;
+
+public class InterfaceInserirCliente implements ActionListener {
+
+	private JFrame frame;
+	private JPanel panel;
+	private ImageIcon imagem;
+	private JButton botao;
+	private JLabel ldata, lid, lnome, lcpf, lmodelo, lvalor, observacao;
+	private JTextField data_texto, id_texto, nome_texto, cpf_texto, modelo_texto, valor_texto;
+	private JTextPane campoDadosObservacao, campoPegaDados, campoPegaDadosObservacao;
+
+	public void Janela() {
+		frame = new JFrame("Inserir dados do cliente");
+		frame.setSize(1200, 750);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*
+		 * frame.setUndecorated(true); frame.setBackground(new Color(1.0f, 1.0f, 1.0f,
+		 * 0.5f));
+		 */
+		frame.getContentPane().setBackground(Color.BLACK);
+		frame.setLocationRelativeTo(null);
+		frame.setLayout(null);
+		// frame.setResizable(false);
+		Tela();
+		frame.setVisible(true);
+	}
+
+	public void Tela() {
+		ldata = new JLabel("Data");
+		ldata.setBounds(30, 50, 50, 20);
+		ldata.setForeground(Color.WHITE);
+		frame.add(ldata);
+
+		data_texto = new JTextField();
+		data_texto.setBounds(80, 50, 300, 20);
+		frame.add(data_texto);
+		/*
+		 * lid = new JLabel("Id"); lid.setBounds(30, 110, 50, 20);
+		 * lid.setForeground(Color.WHITE); frame.add(lid);
+		 * 
+		 * id_texto = new JTextField(); id_texto.setBounds(80, 110, 300, 20);
+		 * frame.add(id_texto);
+		 */
+		lnome = new JLabel("Nome");
+		lnome.setBounds(30, 180, 45, 20);
+		lnome.setForeground(Color.WHITE);
+		frame.add(lnome);
+
+		nome_texto = new JTextField();
+		nome_texto.setBounds(80, 180, 300, 20);
+		frame.add(nome_texto);
+
+		lcpf = new JLabel("CPF");
+		lcpf.setBounds(30, 250, 45, 20);
+		lcpf.setForeground(Color.WHITE);
+		frame.add(lcpf);
+
+		cpf_texto = new JTextField();
+		cpf_texto.setBounds(80, 250, 300, 20);
+		frame.add(cpf_texto);
+
+		lmodelo = new JLabel("Modelo");
+		lmodelo.setBounds(30, 310, 45, 20);
+		lmodelo.setForeground(Color.WHITE);
+		frame.add(lmodelo);
+
+		modelo_texto = new JTextField();
+		modelo_texto.setBounds(80, 310, 300, 20);
+		frame.add(modelo_texto);
+
+		lvalor = new JLabel("Valor");
+		lvalor.setBounds(30, 370, 45, 20);
+		lvalor.setForeground(Color.WHITE);
+		frame.add(lvalor);
+
+		valor_texto = new JTextField();
+		valor_texto.setBounds(80, 370, 300, 20);
+		frame.add(valor_texto);
+
+		observacao = new JLabel("Observação");
+		observacao.setBounds(450, 50, 70, 20);
+		observacao.setForeground(Color.WHITE);
+		frame.add(observacao);
+
+		campoDadosObservacao = new JTextPane();
+		campoDadosObservacao.setBounds(550, 50, 600, 400);
+		frame.add(campoDadosObservacao);
+
+		botao = new JButton("Agendar");
+		botao.setBounds(30, 400, 354, 45);
+		botao.setBackground(Color.GREEN);
+		botao.addActionListener(this);
+		frame.add(botao);
+
+		campoPegaDados = new JTextPane();
+		campoPegaDados.setBounds(30, 480, 400, 200);
+		frame.add(campoPegaDados);
+
+		campoPegaDadosObservacao = new JTextPane();
+		campoPegaDadosObservacao.setBounds(550, 480, 600, 200);
+		frame.add(campoPegaDadosObservacao);
+	}
+
+	public InterfaceInserirCliente() {
+		Janela();
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == botao) {
+
+			try {
+			 	ConexaoBD bd = new ConexaoBD();
+			 	Connection conn = bd.getConnection();
+
+				String data = data_texto.getText();
+				//String id = id_texto.getText();
+				String nome = nome_texto.getText();
+				String cpf = cpf_texto.getText();
+				String modelo = modelo_texto.getText();
+				String valor = valor_texto.getText();
+				String observacao = campoDadosObservacao.getText();
+
+				DadosDoCliente d = new DadosDoCliente(/*data, nome, cpf, modelo, valor, observacao*/);
+				d.setData(data);
+				d.setNome(nome);
+				d.setCpf(cpf);
+				d.setModelo(modelo);
+				d.setValor(valor);
+				d.setObservacao(observacao);
+				d.inserir(conn);
+
+			} catch (Exception e1) {
+				throw new BancoDeDadosException(e1.getMessage());
+
+			}	 
+		}
+	}
+	//public static void main(String[] args) { new InterfaceCliente(); }
+}

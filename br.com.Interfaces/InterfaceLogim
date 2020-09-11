@@ -1,0 +1,93 @@
+ package br.com.Interfaces;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+
+public class InterfaceLogim extends JFrame implements ActionListener {
+
+	ImageIcon painelLogin = new ImageIcon();
+	JLabel l = new JLabel(painelLogin);
+	JPanel panel =  new JPanel();
+	JButton botao = new JButton("Entrar");
+
+	public void Janela() {
+		setSize(370, 360);
+		//setLayout(null);
+		add(l);
+		// setResizable(false);
+		setLocationRelativeTo(null);
+		getContentPane().setBackground(Color.BLACK);
+		setUndecorated(true);
+		setBackground(new Color(1.0f, 1.0f, 1.0f, 0.5f));
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		Tela();
+	}
+
+	public void Tela() {
+
+		JLabel label = new JLabel("Logim");
+		add(BorderLayout.NORTH, label);
+		label.setBounds(150, 50, 150, 100);
+		label.setForeground(Color.WHITE);
+		add(label);
+
+		JLabel usuario = new JLabel("Usuario");
+		add(BorderLayout.NORTH, usuario);
+		usuario.setBounds(8, 146, 100, 35);
+		usuario.setForeground(Color.WHITE);
+		add(usuario);
+
+		JTextField campoUsuario = new JTextField();
+		add(BorderLayout.CENTER, campoUsuario);
+		campoUsuario.setBounds(70, 150, 230, 25);
+		add(campoUsuario);
+
+		JLabel senha = new JLabel("Senha");
+		add(BorderLayout.NORTH, senha);
+		senha.setBounds(5, 196, 100, 35);
+		senha.setForeground(Color.WHITE);
+		add(senha);
+
+		JTextField campoSenha = new JTextField();
+		add(BorderLayout.CENTER, campoSenha);
+		campoSenha.setBounds(70, 200, 230, 25);
+		add(campoSenha);
+
+		//botao = new JButton("Entrar");
+		add(BorderLayout.SOUTH, botao);
+		botao.setBounds(45, 250, 280, 30);
+		botao.setBackground(Color.GRAY);
+		botao.addActionListener(this);
+		add(botao);
+	}
+
+	public InterfaceLogim() {
+		Janela();
+		Tela();
+	}
+	 
+	   //public static void main(String[] args) { new InterfaceLogim(); }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource() == botao) {
+ 			InterfaceMenuPrincipal mp = new InterfaceMenuPrincipal();
+		}
+	}
+}
