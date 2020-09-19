@@ -1,0 +1,28 @@
+package br.com.Interfaces;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JTextPane;
+
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+
+
+public class InterfaceDeletarDadosDoCliente extends JFrame{
+	
+	public void janela() {
+		setTitle("Apagar Dados do Cliente");
+		setSize(500, 500);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Color.BLACK);
+		setVisible(true);
+	}
+	
+	public InterfaceDeletarDadosDoCliente() {
+		janela();
+	}
+	 
+}
